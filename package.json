@@ -1,0 +1,16 @@
+{
+  "name": "passport-local",
+  "version": "0.1.0",
+  "description": "Local username and password authentication strategy for Passport.",
+  "author": "Jared Hanson <jaredhanson@gmail.com> (http://www.jaredhanson.net/)",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/jaredhanson/passport-local.git"
+  },
+  "main": "./lib/passport-local",
+  "dependencies": {
+    "passport": ">= 0.1.0"
+  },
+  "engines": { "node": ">= 0.4.0" },
+  "keywords": ["passport", "local", "auth", "authn", "authentication"]
+}
