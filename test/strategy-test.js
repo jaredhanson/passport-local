@@ -55,6 +55,45 @@ vows.describe('LocalStrategy').addBatch({
     },
   },
   
+  'strategy handling a request with parameter options set': {
+    topic: function() {
+      var strategy = new LocalStrategy({usernameField: 'userid', passwordField: 'passwd'}, function(){});
+      return strategy;
+    },
+    
+    'after augmenting with actions': {
+      topic: function(strategy) {
+        var self = this;
+        var req = {};
+        strategy.success = function(user) {
+          self.callback(null, user);
+        }
+        strategy.fail = function() {
+          self.callback(new Error('should-not-be-called'));
+        }
+        
+        strategy.verify = function(username, password, done) {
+          done(null, { username: username, password: password });
+        }
+        
+        req.body = {};
+        req.body.userid = 'johndoe';
+        req.body.passwd = 'secret';
+        process.nextTick(function () {
+          strategy.authenticate(req);
+        });
+      },
+      
+      'should not generate an error' : function(err, user) {
+        assert.isNull(err);
+      },
+      'should authenticate' : function(err, user) {
+        assert.equal(user.username, 'johndoe');
+        assert.equal(user.password, 'secret');
+      },
+    },
+  },
+  
   'strategy handling a request that is not verified': {
     topic: function() {
       var strategy = new LocalStrategy(function(){});
