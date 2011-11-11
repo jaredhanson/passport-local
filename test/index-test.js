@@ -1,7 +1,7 @@
 var vows = require('vows');
 var assert = require('assert');
 var util = require('util');
-var local = require('passport-local');
+var local = require('../lib/passport-local');
 
 
 vows.describe('passport-local').addBatch({
