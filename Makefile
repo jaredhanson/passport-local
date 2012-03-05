@@ -1,5 +1,5 @@
 NODE = node
-TEST = vows
+TEST = ./node_modules/.bin/vows
 TESTS ?= test/*-test.js
 
 test:
