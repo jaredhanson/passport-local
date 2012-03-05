@@ -33,7 +33,7 @@ vows.describe('LocalStrategy').addBatch({
           self.callback(new Error('should-not-be-called'));
         }
         
-        strategy.verify = function(username, password, done) {
+        strategy._verify = function(username, password, done) {
           done(null, { username: username, password: password });
         }
         
@@ -72,7 +72,7 @@ vows.describe('LocalStrategy').addBatch({
           self.callback(new Error('should-not-be-called'));
         }
         
-        strategy.verify = function(username, password, done) {
+        strategy._verify = function(username, password, done) {
           done(null, { username: username, password: password });
         }
         
@@ -111,7 +111,7 @@ vows.describe('LocalStrategy').addBatch({
           self.callback();
         }
         
-        strategy.verify = function(username, password, done) {
+        strategy._verify = function(username, password, done) {
           done(null, false);
         }
         
@@ -150,7 +150,7 @@ vows.describe('LocalStrategy').addBatch({
           self.callback(null, err);
         }
         
-        strategy.verify = function(username, password, done) {
+        strategy._verify = function(username, password, done) {
           done(new Error('something-went-wrong'));
         }
         
