@@ -2,6 +2,7 @@ var vows = require('vows');
 var assert = require('assert');
 var util = require('util');
 var LocalStrategy = require('passport-local/strategy');
+var BadRequestError = require('passport-local/errors/badrequesterror');
 
 
 vows.describe('LocalStrategy').addBatch({
@@ -94,6 +95,48 @@ vows.describe('LocalStrategy').addBatch({
     },
   },
   
+  'strategy handling a request with additional info': {
+    topic: function() {
+      var strategy = new LocalStrategy(function(){});
+      return strategy;
+    },
+    
+    'after augmenting with actions': {
+      topic: function(strategy) {
+        var self = this;
+        var req = {};
+        strategy.success = function(user, info) {
+          self.callback(null, user, info);
+        }
+        strategy.fail = function() {
+          self.callback(new Error('should-not-be-called'));
+        }
+        
+        strategy._verify = function(username, password, done) {
+          done(null, { username: username, password: password }, { message: 'Welcome' });
+        }
+        
+        req.body = {};
+        req.body.username = 'johndoe';
+        req.body.password = 'secret';
+        process.nextTick(function () {
+          strategy.authenticate(req);
+        });
+      },
+      
+      'should not generate an error' : function(err, user, info) {
+        assert.isNull(err);
+      },
+      'should authenticate' : function(err, user) {
+        assert.equal(user.username, 'johndoe');
+        assert.equal(user.password, 'secret');
+      },
+      'should pass additional info' : function(err, user, info) {
+        assert.equal(info.message, 'Welcome');
+      },
+    },
+  },
+  
   'strategy handling a request that is not verified': {
     topic: function() {
       var strategy = new LocalStrategy(function(){});
@@ -126,6 +169,45 @@ vows.describe('LocalStrategy').addBatch({
       'should fail authentication' : function(err, user) {
         // fail action was called, resulting in test callback
         assert.isNull(err);
+      },
+    },
+  },
+  
+  'strategy handling a request that is not verified with additional info': {
+    topic: function() {
+      var strategy = new LocalStrategy(function(){});
+      return strategy;
+    },
+    
+    'after augmenting with actions': {
+      topic: function(strategy) {
+        var self = this;
+        var req = {};
+        strategy.success = function(user) {
+          self.callback(new Error('should-not-be-called'));
+        }
+        strategy.fail = function(info) {
+          self.callback(null, info);
+        }
+        
+        strategy._verify = function(username, password, done) {
+          done(null, false, { message: 'Wrong password' });
+        }
+        
+        req.body = {};
+        req.body.username = 'johndoe';
+        req.body.password = 'idontknow';
+        process.nextTick(function () {
+          strategy.authenticate(req);
+        });
+      },
+      
+      'should fail authentication' : function(err, info) {
+        // fail action was called, resulting in test callback
+        assert.isNull(err);
+      },
+      'should pass additional info' : function(err, info) {
+        assert.equal(info.message, 'Wrong password');
       },
     },
   },
@@ -181,8 +263,8 @@ vows.describe('LocalStrategy').addBatch({
       topic: function(strategy) {
         var self = this;
         var req = {};
-        strategy.fail = function() {
-          self.callback(null);
+        strategy.fail = function(info) {
+          self.callback(null, info);
         }
         
         process.nextTick(function () {
@@ -190,9 +272,13 @@ vows.describe('LocalStrategy').addBatch({
         });
       },
       
-      'should fail authentication' : function(err) {
+      'should fail authentication' : function(err, info) {
         // fail action was called, resulting in test callback
         assert.isTrue(true);
+      },
+      'should pass BadReqestError as additional info' : function(err, info) {
+        assert.instanceOf(info, Error);
+        assert.instanceOf(info, BadRequestError);
       },
     },
   },
@@ -207,8 +293,8 @@ vows.describe('LocalStrategy').addBatch({
       topic: function(strategy) {
         var self = this;
         var req = {};
-        strategy.fail = function() {
-          self.callback(null);
+        strategy.fail = function(info) {
+          self.callback(null, info);
         }
         
         req.body = {};
@@ -220,6 +306,10 @@ vows.describe('LocalStrategy').addBatch({
       'should fail authentication' : function(err) {
         // fail action was called, resulting in test callback
         assert.isTrue(true);
+      },
+      'should pass BadReqestError as additional info' : function(err, info) {
+        assert.instanceOf(info, Error);
+        assert.instanceOf(info, BadRequestError);
       },
     },
   },
@@ -234,8 +324,8 @@ vows.describe('LocalStrategy').addBatch({
       topic: function(strategy) {
         var self = this;
         var req = {};
-        strategy.fail = function() {
-          self.callback(null);
+        strategy.fail = function(info) {
+          self.callback(null, info);
         }
         
         req.body = {};
@@ -248,6 +338,10 @@ vows.describe('LocalStrategy').addBatch({
       'should fail authentication' : function(err) {
         // fail action was called, resulting in test callback
         assert.isTrue(true);
+      },
+      'should pass BadReqestError as additional info' : function(err, info) {
+        assert.instanceOf(info, Error);
+        assert.instanceOf(info, BadRequestError);
       },
     },
   },
@@ -262,8 +356,8 @@ vows.describe('LocalStrategy').addBatch({
       topic: function(strategy) {
         var self = this;
         var req = {};
-        strategy.fail = function() {
-          self.callback(null);
+        strategy.fail = function(info) {
+          self.callback(null, info);
         }
         
         req.body = {};
@@ -276,6 +370,10 @@ vows.describe('LocalStrategy').addBatch({
       'should fail authentication' : function(err) {
         // fail action was called, resulting in test callback
         assert.isTrue(true);
+      },
+      'should pass BadReqestError as additional info' : function(err, info) {
+        assert.instanceOf(info, Error);
+        assert.instanceOf(info, BadRequestError);
       },
     },
   },
