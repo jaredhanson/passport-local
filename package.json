@@ -1,6 +1,6 @@
 {
   "name": "passport-local",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Local username and password authentication strategy for Passport.",
   "author": { "name": "Jared Hanson", "email": "jaredhanson@gmail.com", "url": "http://www.jaredhanson.net/" },
   "repository": {
