@@ -57,11 +57,12 @@ passport.use(new LocalStrategy(
       
       // Find the user by username.  If there is no user with the given
       // username, or the password is not correct, set the user to `false` to
-      // indicate failure.  Otherwise, return the authenticated `user`.
+      // indicate failure and set a flash message.  Otherwise, return the
+      // authenticated `user`.
       findByUsername(username, function(err, user) {
         if (err) { return done(err); }
-        if (!user) { return done(null, false); }
-        if (user.password != password) { return done(null, false); }
+        if (!user) { return done(null, false, { message: 'Unkown user ' + username }); }
+        if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
         return done(null, user);
       })
     });
@@ -100,7 +101,7 @@ app.get('/account', ensureAuthenticated, function(req, res){
 });
 
 app.get('/login', function(req, res){
-  res.render('login', { user: req.user });
+  res.render('login', { user: req.user, message: req.flash('error') });
 });
 
 // POST /login
@@ -108,11 +109,32 @@ app.get('/login', function(req, res){
 //   request.  If authentication fails, the user will be redirected back to the
 //   login page.  Otherwise, the primary route function function will be called,
 //   which, in this example, will redirect the user to the home page.
+//
+//   curl -v -d "username=bob&password=secret" http://127.0.0.1:3000/login
 app.post('/login', 
-  passport.authenticate('local', { failureRedirect: '/login' }),
+  passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
   function(req, res) {
     res.redirect('/');
   });
+  
+// POST /login
+//   This is an alternative implementation that uses a custom callback to
+//   acheive the same functionality.
+/*
+app.post('/login', function(req, res, next) {
+  passport.authenticate('local', function(err, user, info) {
+    if (err) { return next(err) }
+    if (!user) {
+      req.flash('error', info.message);
+      return res.redirect('/login')
+    }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      return res.redirect('/users/' + user.username);
+    });
+  })(req, res, next);
+});
+*/
 
 app.get('/logout', function(req, res){
   req.logout();
