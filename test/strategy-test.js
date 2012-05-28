@@ -56,6 +56,49 @@ vows.describe('LocalStrategy').addBatch({
     },
   },
   
+  'strategy handling a request with req argument to callback': {
+    topic: function() {
+      var strategy = new LocalStrategy({passReqToCallback: true}, function(){});
+      return strategy;
+    },
+    
+    'after augmenting with actions': {
+      topic: function(strategy) {
+        var self = this;
+        var req = {};
+        req.foo = 'bar';
+        strategy.success = function(user) {
+          self.callback(null, user);
+        }
+        strategy.fail = function() {
+          self.callback(new Error('should-not-be-called'));
+        }
+        
+        strategy._verify = function(req, username, password, done) {
+          done(null, { foo: req.foo, username: username, password: password });
+        }
+        
+        req.body = {};
+        req.body.username = 'johndoe';
+        req.body.password = 'secret';
+        process.nextTick(function () {
+          strategy.authenticate(req);
+        });
+      },
+      
+      'should not generate an error' : function(err, user) {
+        assert.isNull(err);
+      },
+      'should authenticate' : function(err, user) {
+        assert.equal(user.username, 'johndoe');
+        assert.equal(user.password, 'secret');
+      },
+      'should have request details' : function(err, user) {
+        assert.equal(user.foo, 'bar');
+      },
+    },
+  },
+  
   'strategy handling a request with parameter options set': {
     topic: function() {
       var strategy = new LocalStrategy({usernameField: 'userid', passwordField: 'passwd'}, function(){});
