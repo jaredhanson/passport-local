@@ -61,7 +61,7 @@ passport.use(new LocalStrategy(
       // authenticated `user`.
       findByUsername(username, function(err, user) {
         if (err) { return done(err); }
-        if (!user) { return done(null, false, { message: 'Unkown user ' + username }); }
+        if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
         if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
         return done(null, user);
       })
