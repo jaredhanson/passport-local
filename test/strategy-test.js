@@ -99,7 +99,47 @@ vows.describe('LocalStrategy').addBatch({
     },
   },
   
-  'strategy handling a request with parameter options set': {
+  'strategy handling a request with parameter options set to plain string': {
+    topic: function() {
+      var strategy = new LocalStrategy({usernameField: 'user[username]', passwordField: 'user[password]'}, function(){});
+      return strategy;
+    },
+    
+    'after augmenting with actions': {
+      topic: function(strategy) {
+        var self = this;
+        var req = {};
+        strategy.success = function(user) {
+          self.callback(null, user);
+        }
+        strategy.fail = function() {
+          self.callback(new Error('should-not-be-called'));
+        }
+        
+        strategy._verify = function(username, password, done) {
+          done(null, { username: username, password: password });
+        }
+        
+        req.body = {};
+        req.body.user = {};
+        req.body.user.username = 'johndoe';
+        req.body.user.password = 'secret';
+        process.nextTick(function () {
+          strategy.authenticate(req);
+        });
+      },
+      
+      'should not generate an error' : function(err, user) {
+        assert.isNull(err);
+      },
+      'should authenticate' : function(err, user) {
+        assert.equal(user.username, 'johndoe');
+        assert.equal(user.password, 'secret');
+      },
+    },
+  },
+  
+  'strategy handling a request with parameter options set to object-formatted string': {
     topic: function() {
       var strategy = new LocalStrategy({usernameField: 'userid', passwordField: 'passwd'}, function(){});
       return strategy;
