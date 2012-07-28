@@ -99,7 +99,7 @@ vows.describe('LocalStrategy').addBatch({
     },
   },
   
-  'strategy handling a request with parameter options set to plain string': {
+  'strategy handling a request with parameter options set to object-formatted string': {
     topic: function() {
       var strategy = new LocalStrategy({usernameField: 'user[username]', passwordField: 'user[password]'}, function(){});
       return strategy;
@@ -139,7 +139,7 @@ vows.describe('LocalStrategy').addBatch({
     },
   },
   
-  'strategy handling a request with parameter options set to object-formatted string': {
+  'strategy handling a request with parameter options set to plain string': {
     topic: function() {
       var strategy = new LocalStrategy({usernameField: 'userid', passwordField: 'passwd'}, function(){});
       return strategy;
