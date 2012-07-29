@@ -56,6 +56,45 @@ vows.describe('LocalStrategy').addBatch({
     },
   },
   
+  'strategy handling a request with credentials in query': {
+    topic: function() {
+      var strategy = new LocalStrategy(function(){});
+      return strategy;
+    },
+    
+    'after augmenting with actions': {
+      topic: function(strategy) {
+        var self = this;
+        var req = {};
+        strategy.success = function(user) {
+          self.callback(null, user);
+        }
+        strategy.fail = function() {
+          self.callback(new Error('should-not-be-called'));
+        }
+        
+        strategy._verify = function(username, password, done) {
+          done(null, { username: username, password: password });
+        }
+        
+        req.query = {};
+        req.query.username = 'johndoe';
+        req.query.password = 'secret';
+        process.nextTick(function () {
+          strategy.authenticate(req);
+        });
+      },
+      
+      'should not generate an error' : function(err, user) {
+        assert.isNull(err);
+      },
+      'should authenticate' : function(err, user) {
+        assert.equal(user.username, 'johndoe');
+        assert.equal(user.password, 'secret');
+      },
+    },
+  },
+  
   'strategy handling a request with req argument to callback': {
     topic: function() {
       var strategy = new LocalStrategy({passReqToCallback: true}, function(){});
