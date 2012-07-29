@@ -500,6 +500,40 @@ vows.describe('LocalStrategy').addBatch({
     },
   },
   
+  'strategy handling a request with a body, but no username or password, and badRequestMessage option': {
+    topic: function() {
+      var strategy = new LocalStrategy(function(){});
+      return strategy;
+    },
+    
+    'after augmenting with actions': {
+      topic: function(strategy) {
+        var self = this;
+        var req = {};
+        strategy.fail = function(info) {
+          self.callback(null, info);
+        }
+        
+        req.body = {};
+        process.nextTick(function () {
+          strategy.authenticate(req, { badRequestMessage: 'Something is wrong with this request' });
+        });
+      },
+      
+      'should fail authentication' : function(err) {
+        // fail action was called, resulting in test callback
+        assert.isTrue(true);
+      },
+      'should pass BadReqestError as additional info' : function(err, info) {
+        assert.instanceOf(info, Error);
+        assert.instanceOf(info, BadRequestError);
+      },
+      'should set message correctly' : function(err, info) {
+        assert.equal(info.message, 'Something is wrong with this request');
+      },
+    },
+  },
+  
   'strategy constructed without a verify callback': {
     'should throw an error': function (strategy) {
       assert.throws(function() { new LocalStrategy() });
