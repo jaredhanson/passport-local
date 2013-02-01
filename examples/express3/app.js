@@ -1,7 +1,5 @@
 var express = require('express')
   , passport = require('passport')
-  , flash = require('connect-flash')
-  , util = require('util')
   , LocalStrategy = require('passport-local').Strategy;
   
 
@@ -73,7 +71,7 @@ passport.use(new LocalStrategy(
 
 
 
-var app = express.createServer();
+var app = express();
 
 // configure Express
 app.configure(function() {
@@ -85,7 +83,6 @@ app.configure(function() {
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.session({ secret: 'keyboard cat' }));
-  app.use(flash());
   // Initialize Passport!  Also use passport.session() middleware, to support
   // persistent login sessions (recommended).
   app.use(passport.initialize());
@@ -104,7 +101,7 @@ app.get('/account', ensureAuthenticated, function(req, res){
 });
 
 app.get('/login', function(req, res){
-  res.render('login', { user: req.user, message: req.flash('error') });
+  res.render('login', { user: req.user, message: req.session.messages });
 });
 
 // POST /login
@@ -114,30 +111,31 @@ app.get('/login', function(req, res){
 //   which, in this example, will redirect the user to the home page.
 //
 //   curl -v -d "username=bob&password=secret" http://127.0.0.1:3000/login
+// This version has a problem with flash messages
+/*
 app.post('/login', 
   passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
   function(req, res) {
     res.redirect('/');
   });
+*/
   
 // POST /login
 //   This is an alternative implementation that uses a custom callback to
 //   acheive the same functionality.
-/*
 app.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
     if (err) { return next(err) }
     if (!user) {
-      req.flash('error', info.message);
+      req.session.messages = [info.message];
       return res.redirect('/login')
     }
     req.logIn(user, function(err) {
       if (err) { return next(err); }
-      return res.redirect('/users/' + user.username);
+      return res.redirect('/');
     });
   })(req, res, next);
 });
-*/
 
 app.get('/logout', function(req, res){
   req.logout();
