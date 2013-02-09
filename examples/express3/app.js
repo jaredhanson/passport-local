@@ -73,7 +73,7 @@ passport.use(new LocalStrategy(
 
 
 
-var app = express.createServer();
+var app = express();
 
 // configure Express
 app.configure(function() {
