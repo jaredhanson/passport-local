@@ -1,32 +1,60 @@
 var express = require('express')
   , passport = require('passport')
-  , flash = require('connect-flash')
-  , LocalStrategy = require('passport-local').Strategy;
+  , LocalStrategy = require('passport-local').Strategy
+  , mongodb = require('mongodb')
+  , mongoose = require('mongoose')
+  , bcrypt = require('bcrypt')
+  , SALT_WORK_FACTOR = 10;
   
+mongoose.connect('localhost', 'test');
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function callback() {
+  console.log('Connected to DB');
+});
 
-var users = [
-    { id: 1, username: 'bob', password: 'secret', email: 'bob@example.com' }
-  , { id: 2, username: 'joe', password: 'birthday', email: 'joe@example.com' }
-];
+// User Schema
+var userSchema = mongoose.Schema({
+  username: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true},
+});
 
-function findById(id, fn) {
-  var idx = id - 1;
-  if (users[idx]) {
-    fn(null, users[idx]);
+// Bcrypt middleware
+userSchema.pre('save', function(next) {
+	var user = this;
+
+	if(!user.isModified('password')) return next();
+
+	bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+		if(err) return next(err);
+
+		bcrypt.hash(user.password, salt, function(err, hash) {
+			if(err) return next(err);
+			user.password = hash;
+			next();
+		});
+	});
+});
+
+// Password verification
+userSchema.methods.comparePassword = function(candidatePassword, cb) {
+	bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+		if(err) return cb(err);
+		cb(null, isMatch);
+	});
+};
+
+// Seed a user
+var User = mongoose.model('User', userSchema);
+var user = new User({ username: 'bob', email: 'bob@example.com', password: 'secret' });
+user.save(function(err) {
+  if(err) {
+    console.log(err);
   } else {
-    fn(new Error('User ' + id + ' does not exist'));
+    console.log('user: ' + user.username + " saved.");
   }
-}
-
-function findByUsername(username, fn) {
-  for (var i = 0, len = users.length; i < len; i++) {
-    var user = users[i];
-    if (user.username === username) {
-      return fn(null, user);
-    }
-  }
-  return fn(null, null);
-}
+});
 
 
 // Passport session setup.
@@ -39,7 +67,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  findById(id, function (err, user) {
+  User.findById(id, function (err, user) {
     done(err, user);
   });
 });
@@ -50,26 +78,20 @@ passport.deserializeUser(function(id, done) {
 //   credentials (in this case, a username and password), and invoke a callback
 //   with a user object.  In the real world, this would query a database;
 //   however, in this example we are using a baked-in set of users.
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    // asynchronous verification, for effect...
-    process.nextTick(function () {
-      
-      // Find the user by username.  If there is no user with the given
-      // username, or the password is not correct, set the user to `false` to
-      // indicate failure and set a flash message.  Otherwise, return the
-      // authenticated `user`.
-      findByUsername(username, function(err, user) {
-        if (err) { return done(err); }
-        if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
-        if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
+passport.use(new LocalStrategy(function(username, password, done) {
+  User.findOne({ username: username }, function(err, user) {
+    if (err) { return done(err); }
+    if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
+    user.comparePassword(password, function(err, isMatch) {
+      if (err) return done(err);
+      if(isMatch) {
         return done(null, user);
-      })
+      } else {
+        return done(null, false, { message: 'Invalid password' });
+      }
     });
-  }
-));
-
-
+  });
+}));
 
 
 var app = express();
@@ -112,8 +134,8 @@ app.get('/login', function(req, res){
 //   which, in this example, will redirect the user to the home page.
 //
 //   curl -v -d "username=bob&password=secret" http://127.0.0.1:3000/login
-// This version has a problem with flash messages
-/*
+//   
+/***** This version has a problem with flash messages
 app.post('/login', 
   passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
   function(req, res) {
@@ -128,7 +150,7 @@ app.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
     if (err) { return next(err) }
     if (!user) {
-      req.session.messages = [info.message];
+      req.session.messages =  [info.message];
       return res.redirect('/login')
     }
     req.logIn(user, function(err) {
