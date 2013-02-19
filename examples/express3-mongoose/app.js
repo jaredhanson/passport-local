@@ -2,7 +2,9 @@ var express = require('express')
   , passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy
   , mongodb = require('mongodb')
-  , mongoose = require('mongoose');
+  , mongoose = require('mongoose')
+  , bcrypt = require('bcrypt')
+  , SALT_WORK_FACTOR = 10;
   
 mongoose.connect('localhost', 'test');
 var db = mongoose.connection;
@@ -11,23 +13,48 @@ db.once('open', function callback() {
   console.log('Connected to DB');
 });
 
+// User Schema
 var userSchema = mongoose.Schema({
-  username: String,
-  email: String,
-  password: String
+  username: { type: String, required: true, unique: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true},
 });
 
-userSchema.methods.validPassword = function (password) {
-  if (password === this.password) {
-    return true;
-  } else {
-    return false;
-  }
+// Bcrypt middleware
+userSchema.pre('save', function(next) {
+	var user = this;
+
+	if(!user.isModified('password')) return next();
+
+	bcrypt.genSalt(SALT_WORK_FACTOR, function(err, salt) {
+		if(err) return next(err);
+
+		bcrypt.hash(user.password, salt, function(err, hash) {
+			if(err) return next(err);
+			user.password = hash;
+			next();
+		});
+	});
+});
+
+// Password verification
+userSchema.methods.comparePassword = function(candidatePassword, cb) {
+	bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+		if(err) return cb(err);
+		cb(null, isMatch);
+	});
 };
 
+// Seed a user
 var User = mongoose.model('User', userSchema);
 var user = new User({ username: 'bob', email: 'bob@example.com', password: 'secret' });
-user.save();
+user.save(function(err) {
+  if(err) {
+    console.log(err);
+  } else {
+    console.log('user: ' + user.username + " saved.");
+  }
+});
 
 
 // Passport session setup.
@@ -55,12 +82,16 @@ passport.use(new LocalStrategy(function(username, password, done) {
   User.findOne({ username: username }, function(err, user) {
     if (err) { return done(err); }
     if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
-    if (!user.validPassword(password)) { return done(null, false, { message: 'Invalid password' }); }
-    return done(null, user);
+    user.comparePassword(password, function(err, isMatch) {
+      if (err) return done(err);
+      if(isMatch) {
+        return done(null, user);
+      } else {
+        return done(null, false, { message: 'Invalid password' });
+      }
+    });
   });
 }));
-
-
 
 
 var app = express();
