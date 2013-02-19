@@ -1,6 +1,5 @@
 var express = require('express')
   , passport = require('passport')
-  , flash = require('connect-flash')
   , LocalStrategy = require('passport-local').Strategy;
   
 
@@ -112,8 +111,8 @@ app.get('/login', function(req, res){
 //   which, in this example, will redirect the user to the home page.
 //
 //   curl -v -d "username=bob&password=secret" http://127.0.0.1:3000/login
-// This version has a problem with flash messages
-/*
+//   
+/***** This version has a problem with flash messages
 app.post('/login', 
   passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
   function(req, res) {
@@ -128,7 +127,7 @@ app.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
     if (err) { return next(err) }
     if (!user) {
-      req.session.messages = [info.message];
+      req.session.messages =  [info.message];
       return res.redirect('/login')
     }
     req.logIn(user, function(err) {
