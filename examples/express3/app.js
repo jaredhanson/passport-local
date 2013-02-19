@@ -84,6 +84,7 @@ app.configure(function() {
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.session({ secret: 'keyboard cat' }));
+  app.use(flash());
   // Initialize Passport!  Also use passport.session() middleware, to support
   // persistent login sessions (recommended).
   app.use(passport.initialize());
@@ -102,7 +103,7 @@ app.get('/account', ensureAuthenticated, function(req, res){
 });
 
 app.get('/login', function(req, res){
-  res.render('login', { user: req.user, message: req.session.messages });
+  res.render('login', { user: req.user, message: req.flash('error') });
 });
 
 // POST /login
@@ -112,40 +113,37 @@ app.get('/login', function(req, res){
 //   which, in this example, will redirect the user to the home page.
 //
 //   curl -v -d "username=bob&password=secret" http://127.0.0.1:3000/login
-// This version has a problem with flash messages
-/*
 app.post('/login', 
   passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
   function(req, res) {
     res.redirect('/');
   });
-*/
   
 // POST /login
 //   This is an alternative implementation that uses a custom callback to
 //   acheive the same functionality.
+/*
 app.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
     if (err) { return next(err) }
     if (!user) {
-      req.session.messages = [info.message];
+      req.flash('error', info.message);
       return res.redirect('/login')
     }
     req.logIn(user, function(err) {
       if (err) { return next(err); }
-      return res.redirect('/');
+      return res.redirect('/users/' + user.username);
     });
   })(req, res, next);
 });
+*/
 
 app.get('/logout', function(req, res){
   req.logout();
   res.redirect('/');
 });
 
-app.listen(3000, function() {
-  console.log('Express server listening on port 3000');
-});
+app.listen(3000);
 
 
 // Simple route middleware to ensure user is authenticated.
