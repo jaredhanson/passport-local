@@ -1,4 +1,5 @@
-var express = require('express')
+var flash = require('connect-flash')
+  , express = require('express')
   , passport = require('passport')
   , util = require('util')
   , LocalStrategy = require('passport-local').Strategy;
@@ -72,7 +73,7 @@ passport.use(new LocalStrategy(
 
 
 
-var app = express.createServer();
+var app = express();
 
 // configure Express
 app.configure(function() {
@@ -85,6 +86,7 @@ app.configure(function() {
   app.use(express.session({ secret: 'keyboard cat' }));
   // Initialize Passport!  Also use passport.session() middleware, to support
   // persistent login sessions (recommended).
+  app.use(flash());
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(app.router);
