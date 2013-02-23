@@ -5,6 +5,7 @@
     "express": ">= 0.0.0",
     "ejs": ">= 0.0.0",
     "passport": ">= 0.0.0",
-    "passport-local": ">= 0.0.0"
+    "passport-local": ">= 0.0.0",
+    "connect-flash": "~0.1.0"
   }
 }
