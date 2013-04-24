@@ -30,7 +30,7 @@ passport.use(new LocalStrategy(function(username, password, done) {
 // Simple route middleware to ensure user is authenticated.  Otherwise send to login page.
 exports.ensureAuthenticated = function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  res.redirect('/logout')
+  res.redirect('/login')
 }
 
 
