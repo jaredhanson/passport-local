@@ -7,8 +7,9 @@
     "passport": "~0.1.15",
     "passport-local": "~0.1.6",
     "mongoose": "~3.5.5",
-    "bcrypt": "~0.7.3",
-    "parseq": "~0.2.0",
-    "jake": "~0.5.8"
+    "bcrypt": "~0.7.3"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1"
   }
 }
