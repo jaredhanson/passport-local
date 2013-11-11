@@ -17,6 +17,20 @@ vows.describe('LocalStrategy').addBatch({
     },
   },
   
+  'multiple strategies': {
+    topic: function() {
+      return [
+        new LocalStrategy({ strategyName: 'local-one' }, function(){}),
+        new LocalStrategy({ strategyName: 'local-two' }, function(){})
+      ];
+    },
+    
+    'should be named session': function (strategies) {
+      assert.equal(strategies[0].name, 'local-one');
+      assert.equal(strategies[1].name, 'local-two');
+    },
+  },
+  
   'strategy handling a request': {
     topic: function() {
       var strategy = new LocalStrategy(function(){});
