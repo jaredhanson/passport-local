@@ -22,7 +22,7 @@
   "main": "./lib/passport-local",
   "dependencies": {
     "pkginfo": "0.2.x",
-    "passport": "~0.1.1"
+    "passport": "~0.2.0"
   },
   "devDependencies": {
     "vows": "0.6.x"
