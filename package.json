@@ -21,11 +21,13 @@
   } ],
   "main": "./lib/passport-local",
   "dependencies": {
-    "pkginfo": "0.2.x",
-    "passport": "~0.1.1"
+    "pkginfo": "0.2.x"
+  },
+  "peerDependencies": {
+    "passport": ">=0.1.1 <1"
   },
   "devDependencies": {
-    "vows": "0.6.x"
+    "vows": "*"
   },
   "scripts": {
     "test": "NODE_PATH=lib node_modules/.bin/vows test/*-test.js"
