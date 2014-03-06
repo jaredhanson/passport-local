@@ -17,8 +17,7 @@ db.once('open', function callback() {
 var userSchema = mongoose.Schema({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
-  password: { type: String, required: true},
-  accessToken: { type: String } // Used for Remember Me
+  password: { type: String, required: true}
 });
 
 // Bcrypt middleware
@@ -46,18 +45,6 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
 	});
 };
 
-// Remember Me implementation helper method
-userSchema.methods.generateRandomToken = function () {
-  var user = this,
-      chars = "_!abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
-      token = new Date().getTime() + '_';
-  for ( var x = 0; x < 16; x++ ) {
-    var i = Math.floor( Math.random() * 62 );
-    token += chars.charAt( i );
-  }
-  return token;
-};
-
 // Seed a user
 var User = mongoose.model('User', userSchema);
 var usr = new User({ username: 'bob', email: 'bob@example.com', password: 'secret' });
@@ -78,29 +65,11 @@ usr.save(function(err) {
 //
 //   Both serializer and deserializer edited for Remember Me functionality
 passport.serializeUser(function(user, done) {
-  var createAccessToken = function () {
-    var token = user.generateRandomToken();
-    User.findOne( { accessToken: token }, function (err, existingUser) {
-      if (err) { return done( err ); }
-      if (existingUser) {
-        createAccessToken(); // Run the function again - the token has to be unique!
-      } else {
-        user.set('accessToken', token);
-        user.save( function (err) {
-          if (err) return done(err);
-          return done(null, user.get('accessToken'));
-        })
-      }
-    });
-  };
-
-  if ( user._id ) {
-    createAccessToken();
-  }
+  done(null, user.email);
 });
 
-passport.deserializeUser(function(token, done) {
-  User.findOne( {accessToken: token } , function (err, user) {
+passport.deserializeUser(function(email, done) {
+  User.findOne( { email: email } , function (err, user) {
     done(err, user);
   });
 });
