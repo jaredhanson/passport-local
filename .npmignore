@@ -1,16 +1,23 @@
-README.md
 Makefile
-doc/
+README.md
+build/
+docs/
 examples/
+reports/
+support/
 test/
-
-# Mac OS X
-.DS_Store
 
 # Node.js
 .npmignore
 node_modules/
 npm-debug.log
 
+# Mac OS X
+.DS_Store
+
 # Git
 .git*
+
+# Utilities
+.jshintrc
+.travis.yml

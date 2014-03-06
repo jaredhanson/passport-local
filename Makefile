@@ -1,24 +1,47 @@
-SOURCES = lib/**/*.js
+SOURCES ?= lib/*.js
+TESTS ?= test/*.test.js
+
+test: test-mocha
+test-cov: test-istanbul-mocha
+view-cov: view-istanbul-report
+lint: lint-jshint
+lint-tests: lint-tests-jshint
+
 
 # ==============================================================================
-# Node Tests
+# Node.js
 # ==============================================================================
-
-VOWS = ./node_modules/.bin/vows
-TESTS ?= test/*-test.js
-
-test:
-	@NODE_ENV=test NODE_PATH=lib $(VOWS) $(TESTS)
+include support/mk/node.mk
+include support/mk/mocha.mk
+include support/mk/istanbul.mk
 
 # ==============================================================================
-# Static Analysis
+# Analysis
 # ==============================================================================
+include support/mk/notes.mk
+include support/mk/jshint.mk
 
-JSHINT = jshint
+# ==============================================================================
+# Reports
+# ==============================================================================
+include support/mk/coveralls.mk
 
-hint: lint
-lint:
-	$(JSHINT) $(SOURCES)
+# ==============================================================================
+# Continuous Integration
+# ==============================================================================
+submit-cov-to-coveralls: submit-istanbul-lcov-to-coveralls
+
+# Travis CI
+ci-travis: test test-cov
+
+# ==============================================================================
+# Clean
+# ==============================================================================
+clean:
+	rm -rf build
+	rm -rf reports
+
+clobber: clean clobber-node
 
 
-.PHONY: test hint lint
+.PHONY: test test-cov view-cov lint lint-tests submit-cov-to-coveralls ci-travis clean clobber
