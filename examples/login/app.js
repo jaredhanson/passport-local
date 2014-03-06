@@ -86,9 +86,9 @@ app.configure(function() {
   app.use(express.session({ secret: 'keyboard cat' }));
   // Initialize Passport!  Also use passport.session() middleware, to support
   // persistent login sessions (recommended).
-  app.use(flash());
   app.use(passport.initialize());
   app.use(passport.session());
+  app.use(flash());
   app.use(app.router);
   app.use(express.static(__dirname + '/../../public'));
 });
