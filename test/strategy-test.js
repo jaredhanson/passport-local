@@ -266,6 +266,7 @@ vows.describe('LocalStrategy').addBatch({
     },
   },
   
+  // OK
   'strategy handling a request that is not verified': {
     topic: function() {
       var strategy = new LocalStrategy(function(){});
@@ -302,6 +303,7 @@ vows.describe('LocalStrategy').addBatch({
     },
   },
   
+  // OK
   'strategy handling a request that is not verified with additional info': {
     topic: function() {
       var strategy = new LocalStrategy(function(){});
@@ -341,6 +343,7 @@ vows.describe('LocalStrategy').addBatch({
     },
   },
   
+  // OK
   'strategy handling a request that encounters an error during verification': {
     topic: function() {
       var strategy = new LocalStrategy(function(){});
@@ -382,6 +385,7 @@ vows.describe('LocalStrategy').addBatch({
     },
   },
   
+  // OK
   'strategy handling a request without a body': {
     topic: function() {
       var strategy = new LocalStrategy(function(){});
@@ -412,6 +416,7 @@ vows.describe('LocalStrategy').addBatch({
     },
   },
   
+  // OK
   'strategy handling a request with a body, but no username or password': {
     topic: function() {
       var strategy = new LocalStrategy(function(){});
@@ -443,6 +448,7 @@ vows.describe('LocalStrategy').addBatch({
     },
   },
   
+  // OK
   'strategy handling a request with a body, but no password': {
     topic: function() {
       var strategy = new LocalStrategy(function(){});
@@ -475,6 +481,7 @@ vows.describe('LocalStrategy').addBatch({
     },
   },
   
+  // OK
   'strategy handling a request with a body, but no username': {
     topic: function() {
       var strategy = new LocalStrategy(function(){});

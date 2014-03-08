@@ -78,4 +78,113 @@ describe('Strategy', function() {
     });
   });
   
+  describe('handling a request without a body', function() {
+    var strategy = new Strategy(function(username, password, done) {
+      throw new Error('should not be called');
+    });
+    
+    var info, status;
+    
+    before(function(done) {
+      chai.passport(strategy)
+        .fail(function(i, s) {
+          info = i;
+          status = s;
+          done();
+        })
+        .req(function(req) {
+        })
+        .authenticate();
+    });
+    
+    it('should fail with info and status', function() {
+      expect(info).to.be.an.object;
+      expect(info.message).to.equal('Missing credentials');
+      expect(status).to.equal(400);
+    });
+  });
+  
+  describe('handling a request without a body, but no username and password', function() {
+    var strategy = new Strategy(function(username, password, done) {
+      throw new Error('should not be called');
+    });
+    
+    var info, status;
+    
+    before(function(done) {
+      chai.passport(strategy)
+        .fail(function(i, s) {
+          info = i;
+          status = s;
+          done();
+        })
+        .req(function(req) {
+          req.body = {};
+        })
+        .authenticate();
+    });
+    
+    it('should fail with info and status', function() {
+      expect(info).to.be.an.object;
+      expect(info.message).to.equal('Missing credentials');
+      expect(status).to.equal(400);
+    });
+  });
+  
+  describe('handling a request without a body, but no password', function() {
+    var strategy = new Strategy(function(username, password, done) {
+      throw new Error('should not be called');
+    });
+    
+    var info, status;
+    
+    before(function(done) {
+      chai.passport(strategy)
+        .fail(function(i, s) {
+          info = i;
+          status = s;
+          done();
+        })
+        .req(function(req) {
+          req.body = {};
+          req.body.username = 'johndoe';
+        })
+        .authenticate();
+    });
+    
+    it('should fail with info and status', function() {
+      expect(info).to.be.an.object;
+      expect(info.message).to.equal('Missing credentials');
+      expect(status).to.equal(400);
+    });
+  });
+  
+  describe('handling a request without a body, but no username', function() {
+    var strategy = new Strategy(function(username, password, done) {
+      throw new Error('should not be called');
+    });
+    
+    var info, status;
+    
+    before(function(done) {
+      chai.passport(strategy)
+        .fail(function(i, s) {
+          info = i;
+          status = s;
+          done();
+        })
+        .req(function(req) {
+          req.body = {};
+          req.body.password = 'secret';
+        })
+        .authenticate();
+    });
+    
+    it('should fail with info and status', function() {
+      expect(info).to.be.an.object;
+      expect(info.message).to.equal('Missing credentials');
+      expect(status).to.equal(400);
+    });
+  });
+  
 });
