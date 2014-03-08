@@ -7,6 +7,7 @@ var BadRequestError = require('passport-local/errors/badrequesterror');
 
 vows.describe('LocalStrategy').addBatch({
   
+  // OK
   'strategy': {
     topic: function() {
       return new LocalStrategy(function(){});
