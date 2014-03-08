@@ -1,8 +1,8 @@
 var vows = require('vows');
 var assert = require('assert');
 var util = require('util');
-var LocalStrategy = require('passport-local/strategy');
-var BadRequestError = require('passport-local/errors/badrequesterror');
+var LocalStrategy = require('../lib/strategy');
+var BadRequestError = require('../lib/errors/badrequesterror');
 
 
 vows.describe('LocalStrategy').addBatch({

@@ -1,4 +1,4 @@
-var Strategy = require('../lib/passport-local/strategy');
+var Strategy = require('../lib/strategy');
 
 
 describe('Strategy', function() {
