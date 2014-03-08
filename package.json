@@ -32,7 +32,6 @@
     "passport-strategy": "1.x.x"
   },
   "devDependencies": {
-    "vows": "*",
     "mocha": "1.x.x",
     "chai": "1.x.x",
     "chai-passport-strategy": "0.1.x"
@@ -41,6 +40,6 @@
     "node": ">= 0.4.0"
   },
   "scripts": {
-    "test": "NODE_PATH=lib node_modules/.bin/vows test/*-test.js"
+    "test": "node_modules/.bin/mocha --reporter spec --require test/bootstrap/node test/*.test.js"
   }
 }
