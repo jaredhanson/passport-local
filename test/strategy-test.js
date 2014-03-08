@@ -98,6 +98,7 @@ vows.describe('LocalStrategy').addBatch({
     },
   },
   
+  // OK
   'strategy handling a request with req argument to callback': {
     topic: function() {
       var strategy = new LocalStrategy({passReqToCallback: true}, function(){});
