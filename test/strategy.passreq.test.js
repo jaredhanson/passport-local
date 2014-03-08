@@ -1,3 +1,6 @@
+/* global describe, it, expect, before */
+/* jshint expr: true */
+
 var chai = require('chai')
   , Strategy = require('../lib/strategy');
 
@@ -6,7 +9,7 @@ describe('Strategy', function() {
     
   describe('passing request to verify callback', function() {
     var strategy = new Strategy({passReqToCallback: true}, function(req, username, password, done) {
-      if (username == 'johndoe' && password == 'secret') { 
+      if (username == 'johndoe' && password == 'secret') {
         return done(null, { id: '1234' }, { scope: 'read', foo: req.headers['x-foo'] });
       }
       return done(null, false);

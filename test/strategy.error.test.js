@@ -1,3 +1,5 @@
+/* global describe, it, expect, before */
+
 var chai = require('chai')
   , Strategy = require('../lib/strategy');
 

@@ -1,3 +1,6 @@
+/* global describe, it, expect, before */
+/* jshint expr: true */
+
 var chai = require('chai')
   , Strategy = require('../lib/strategy');
 
@@ -6,7 +9,7 @@ describe('Strategy', function() {
     
   describe('handling a request with valid credentials in body using custom field names', function() {
     var strategy = new Strategy({ usernameField: 'userid', passwordField: 'passwd' }, function(username, password, done) {
-      if (username == 'johndoe' && password == 'secret') { 
+      if (username == 'johndoe' && password == 'secret') {
         return done(null, { id: '1234' }, { scope: 'read' });
       }
       return done(null, false);
@@ -43,7 +46,7 @@ describe('Strategy', function() {
   
   describe('handling a request with valid credentials in body using custom field names with object notation', function() {
     var strategy = new Strategy({ usernameField: 'user[username]', passwordField: 'user[password]' }, function(username, password, done) {
-      if (username == 'johndoe' && password == 'secret') { 
+      if (username == 'johndoe' && password == 'secret') {
         return done(null, { id: '1234' }, { scope: 'read' });
       }
       return done(null, false);

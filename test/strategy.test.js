@@ -1,3 +1,5 @@
+/* global describe, it, expect */
+
 var Strategy = require('../lib/strategy');
 
 
@@ -11,7 +13,7 @@ describe('Strategy', function() {
   
   it('should throw if constructed without a verify callback', function() {
     expect(function() {
-      new Strategy();
+      var s = new Strategy();
     }).to.throw(TypeError, 'LocalStrategy requires a verify callback');
   });
   
