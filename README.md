@@ -1,4 +1,11 @@
-# Passport-Local
+# passport-local
+
+[![Build](https://travis-ci.org/jaredhanson/passport-local.png)](https://travis-ci.org/jaredhanson/passport-local)
+[![Coverage](https://coveralls.io/repos/jaredhanson/passport-local/badge.png)](https://coveralls.io/r/jaredhanson/passport-local)
+[![Quality](https://codeclimate.com/github/jaredhanson/passport-local.png)](https://codeclimate.com/github/jaredhanson/passport-local)
+[![Dependencies](https://david-dm.org/jaredhanson/passport-local.png)](https://david-dm.org/jaredhanson/passport-local)
+[![Tips](http://img.shields.io/gittip/jaredhanson.png)](https://www.gittip.com/jaredhanson/)
+
 
 [Passport](http://passportjs.org/) strategy for authenticating with a username
 and password.
@@ -52,10 +59,8 @@ For complete, working examples, refer to the multiple [examples](https://github.
 
 ## Tests
 
-    $ npm install --dev
-    $ make test
-
-[![Build Status](https://secure.travis-ci.org/jaredhanson/passport-local.png)](http://travis-ci.org/jaredhanson/passport-local)
+    $ npm install
+    $ npm test
 
 ## Credits
 
@@ -65,4 +70,4 @@ For complete, working examples, refer to the multiple [examples](https://github.
 
 [The MIT License](http://opensource.org/licenses/MIT)
 
-Copyright (c) 2011-2013 Jared Hanson <[http://jaredhanson.net/](http://jaredhanson.net/)>
+Copyright (c) 2011-2014 Jared Hanson <[http://jaredhanson.net/](http://jaredhanson.net/)>
