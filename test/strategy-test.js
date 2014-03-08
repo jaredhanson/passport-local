@@ -514,6 +514,7 @@ vows.describe('LocalStrategy').addBatch({
     },
   },
   
+  // OK
   'strategy handling a request with a body, but no username or password, and badRequestMessage option': {
     topic: function() {
       var strategy = new LocalStrategy(function(){});
@@ -548,6 +549,7 @@ vows.describe('LocalStrategy').addBatch({
     },
   },
   
+  // OK
   'strategy constructed without a verify callback': {
     'should throw an error': function (strategy) {
       assert.throws(function() { new LocalStrategy() });
