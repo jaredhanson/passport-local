@@ -9,8 +9,4 @@ describe('passport-local', function() {
     expect(strategy).to.equal(strategy.Strategy);
   });
   
-  it('should export Error constructors', function() {
-    expect(strategy.BadRequestError).to.be.a('function');
-  });
-  
 });
