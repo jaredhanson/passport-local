@@ -18,6 +18,7 @@ vows.describe('LocalStrategy').addBatch({
     },
   },
   
+  // OK
   'strategy handling a request': {
     topic: function() {
       var strategy = new LocalStrategy(function(){});
@@ -57,6 +58,7 @@ vows.describe('LocalStrategy').addBatch({
     },
   },
   
+  // OK
   'strategy handling a request with credentials in query': {
     topic: function() {
       var strategy = new LocalStrategy(function(){});
