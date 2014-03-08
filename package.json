@@ -1,6 +1,6 @@
 {
   "name": "passport-local",
-  "version": "0.1.6",
+  "version": "1.0.0",
   "description": "Local username and password authentication strategy for Passport.",
   "keywords": [
     "passport",
