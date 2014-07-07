@@ -1,0 +1,15 @@
+<% layout('layout') -%>
+
+<form action="/signup" method="post">
+  <div>
+    <label>Username:</label>
+    <input type="text" name="user[username]"/><br/>
+  </div>
+  <div>
+    <label>Password:</label>
+      <input type="password" name="user[password]"/>
+  </div>
+  <div>
+    <input type="submit" value="Submit"/>
+  </div>
+</form>
