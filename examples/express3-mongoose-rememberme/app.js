@@ -1,7 +1,6 @@
 var express = require('express')
   , passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy
-  , mongodb = require('mongodb')
   , mongoose = require('mongoose')
   , bcrypt = require('bcrypt')
   , SALT_WORK_FACTOR = 10;
