@@ -1,0 +1,14 @@
+<!doctype html>
+<html>
+<head></head>
+<body>
+<h1>create group</h1>
+<% if (message) { %>
+  <div><%= message %></div>
+<% } %>
+<form action='/groups/' method='post'>
+  <% include _form %>
+  <button type='submit'>create</button>
+</form>
+</body>
+</html>
