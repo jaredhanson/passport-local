@@ -81,8 +81,7 @@ var app = express();
 // configure Express
 
   app.set('views', __dirname + '/views');
-  app.set('view engine', 'ejs');
-  app.engine('ejs', require('ejs-locals'));
+  app.set('view engine', 'jade');
   app.use(morgan('combined'));
   app.use(cookieParser());
   app.use(bodyParser.urlencoded({extended:true}));
@@ -101,7 +100,7 @@ var app = express();
 
 
 app.get('/', function(req, res){
-  res.render('index', { user: req.user });
+  res.render('index', { user: (typeof(req.user) == 'undefined' ? false : req.user) });
 });
 
 app.get('/account', ensureAuthenticated, function(req, res){

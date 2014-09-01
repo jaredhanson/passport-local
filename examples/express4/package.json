@@ -9,8 +9,7 @@
     "method-override":">0.0.0",
     "body-parser":">=0.0.0",
     "connect-flash": "0.1.x",
-    "ejs": ">= 0.0.0",
-    "ejs-locals": ">= 0.0.0",
+    "jade": "1.6.x",
     "passport": ">= 0.0.0",
     "passport-local": ">= 0.0.0"
   }
