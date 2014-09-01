@@ -83,11 +83,15 @@ var app = express();
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
   app.engine('ejs', require('ejs-locals'));
-  app.use(morgan());
+  app.use(morgan('combined'));
   app.use(cookieParser());
-  app.use(bodyParser());
+  app.use(bodyParser.urlencoded({extended:true}));
   app.use(methodOverride());
-  app.use(session({ secret: 'keyboard cat' }));
+  app.use(session({
+    resave:true,
+    saveUninitialized:true,
+    secret: 'keyboard cat'
+  }));
   app.use(flash());
   // Initialize Passport!  Also use passport.session() middleware, to support
   // persistent login sessions (recommended).
