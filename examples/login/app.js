@@ -6,7 +6,8 @@ var flash = require('connect-flash')
   , cookieParser = require('cookie-parser')
   , bodyParser = require('body-parser')
   , methodOverride = require('method-override')
-  , session = require('express-session');
+  , session = require('express-session')
+  , debug = require('debug')('example:login');
 
 var users = [
     { id: 1, username: 'bob', password: 'secret', email: 'bob@example.com' }
@@ -16,9 +17,13 @@ var users = [
 function findById(id, fn) {
   var idx = id - 1;
   if (users[idx]) {
+    debug('found user:');
+    debug(users[idx]);
     fn(null, users[idx]);
   } else {
-    fn(new Error('User ' + id + ' does not exist'));
+    var msg = 'User ' + id + ' does not exist';
+    debug(msg);
+    fn(new Error(msg));
   }
 }
 
@@ -26,12 +31,14 @@ function findByUsername(username, fn) {
   for (var i = 0, len = users.length; i < len; i++) {
     var user = users[i];
     if (user.username === username) {
+      debug('found user:');
+      debug(user);
       return fn(null, user);
     }
   }
+  debug('user ' + username + ' not found');
   return fn(null, null);
 }
-
 
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to
@@ -39,11 +46,20 @@ function findByUsername(username, fn) {
 //   this will be as simple as storing the user ID when serializing, and finding
 //   the user by ID when deserializing.
 passport.serializeUser(function(user, done) {
+  debug('serializeUser:');
+  debug(user);
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
+  debug('deserializeUser');
   findById(id, function (err, user) {
+    if(err) {
+      debug('error:');
+      debug(err);
+    }
+    debug('user:');
+    debug(user);
     done(err, user);
   });
 });
@@ -56,6 +72,7 @@ passport.deserializeUser(function(id, done) {
 //   however, in this example we are using a baked-in set of users.
 passport.use(new LocalStrategy(
   function(username, password, done) {
+    debug('verify called. username: %s, password: %s', username, password);
     // asynchronous verification, for effect...
     process.nextTick(function () {
       
@@ -64,17 +81,24 @@ passport.use(new LocalStrategy(
       // indicate failure and set a flash message.  Otherwise, return the
       // authenticated `user`.
       findByUsername(username, function(err, user) {
-        if (err) { return done(err); }
-        if (!user) { return done(null, false, { message: 'Unknown user ' + username }); }
-        if (user.password != password) { return done(null, false, { message: 'Invalid password' }); }
+        if (err) {
+          debug('error in verify');
+          return done(err);
+        }
+        if (!user) {
+          debug('user not found in verify');
+          return done(null, false, { message: 'Unknown user ' + username });
+        }
+        if (user.password != password) {
+          debug('invalid password in verify');
+          return done(null, false, { message: 'Invalid password' });
+        }
+        debug('verify successful');
         return done(null, user);
       })
     });
   }
 ));
-
-
-
 
 var app = express();
 
@@ -93,8 +117,10 @@ app.use(session({secret: 'keyboard cat', resave: true, saveUninitialized: true})
 // Initialize Passport!  Also use passport.session() middleware, to support
 // persistent login sessions (recommended).
 app.use(flash());
+debug('about to initialize passport and session');
 app.use(passport.initialize());
 app.use(passport.session());
+debug('passport and session added to request pipeline');
 
 
 app.get('/', function(req, res){
@@ -119,12 +145,13 @@ app.get('/login', function(req, res){
 app.post('/login', 
   passport.authenticate('local', { failureRedirect: '/login', failureFlash: true }),
   function(req, res) {
+    debug('redirecting to / in POST /login');
     res.redirect('/');
   });
   
 // POST /login
 //   This is an alternative implementation that uses a custom callback to
-//   acheive the same functionality.
+//   achieve the same functionality.
 /*
 app.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
@@ -142,6 +169,7 @@ app.post('/login', function(req, res, next) {
 */
 
 app.get('/logout', function(req, res){
+  debug('GET /logout');
   req.logout();
   res.redirect('/');
 });
@@ -157,6 +185,7 @@ app.listen(3000);
 //   the request will proceed.  Otherwise, the user will be redirected to the
 //   login page.
 function ensureAuthenticated(req, res, next) {
+  debug('req.isAuthenticated(): %s', req.isAuthenticated());
   if (req.isAuthenticated()) { return next(); }
   res.redirect('/login');
 }
