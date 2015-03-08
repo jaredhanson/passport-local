@@ -39,7 +39,7 @@
     "chai-passport-strategy": "0.1.x"
   },
   "engines": {
-    "node": ">= 0.4.0"
+    "node": ">= 0.8"
   },
   "scripts": {
     "test": "node_modules/.bin/mocha --reporter spec --require test/bootstrap/node test/*.test.js"
