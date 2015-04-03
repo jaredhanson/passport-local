@@ -5,6 +5,8 @@ node_js:
   - "0.8"
 
 before_install:
+ - "if [[ $(node --version) =~ v0\\.8\\.* ]]; then npm install npm@1.2.x -g; fi" # Prevent bug on npm 1.2.30
+ - "npm --version"
  - "npm install istanbul -g"
  - "npm install coveralls -g"
 
