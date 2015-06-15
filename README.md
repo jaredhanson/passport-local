@@ -39,6 +39,41 @@ credentials and calls `done` providing a user.
       }
     ));
 
+#### Parameters
+
+By default, `LocalStrategy` expects to find credentials in parameters
+named username and password. If your site prefers to name these fields
+differently, options are available to change the defaults.
+
+    passport.use(new LocalStrategy({
+        usernameField: 'email',
+        passwordField: 'passwd',
+        session: false
+      },
+      function(username, password, done) {
+        // ...
+      }
+    ));
+
+When session support is not necessary, it can be safely disabled by
+setting the `session` option to false.
+
+The verify callback can be supplied with the `request` object by setting
+the `passReqToCallback` option to true, and changing callback arguments
+accordingly.
+
+    passport.use(new LocalStrategy({
+        usernameField: 'email',
+        passwordField: 'passwd',
+        passReqToCallback: true,
+        session: false
+      },
+      function(req, username, password, done) {
+        // request object is now first argument
+        // ...
+      }
+    ));
+
 #### Authenticate Requests
 
 Use `passport.authenticate()`, specifying the `'local'` strategy, to
