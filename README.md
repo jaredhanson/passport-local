@@ -107,7 +107,11 @@ app.post('/login',
 
 ## Examples
 
-For complete, working examples, refer to the multiple [examples](https://github.com/jaredhanson/passport-local/tree/master/examples) included.
+Developers using the popular [Express](http://expressjs.com/) web framework can
+refer to an [example](https://github.com/passport/express-4.x-local-example)
+as a starting point for their own web applications.
+
+Additional examples can be found on the [wiki](https://github.com/jaredhanson/passport-local/wiki/Examples).
 
 ## Tests
 
