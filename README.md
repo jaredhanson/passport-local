@@ -18,7 +18,7 @@ unobtrusively integrated into any application or framework that supports
 
 ## Install
 
-```no-highlight
+```bash
 $ npm install passport-local
 ```
 
@@ -111,7 +111,7 @@ For complete, working examples, refer to the multiple [examples](https://github.
 
 ## Tests
 
-```no-highlight
+```bash
 $ npm install
 $ npm test
 ```
