@@ -31,7 +31,7 @@ app.get('/', basic_routes.index);
 app.get('/account', pass.ensureAuthenticated, user_routes.account);
 app.get('/login', user_routes.getlogin);
 app.post('/login', user_routes.postlogin);
-app.get('/admin', pass.ensureAuthenticated, pass.ensureAdmin(), user_routes.admin);
+app.get('/admin', pass.ensureAuthenticated, pass.ensureAdmin, user_routes.admin);
 app.get('/logout', user_routes.logout);
 
 app.listen(3000, function() {
