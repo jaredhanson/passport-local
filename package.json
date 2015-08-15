@@ -24,6 +24,12 @@
     "url": "http://github.com/jaredhanson/passport-local/issues"
   },
   "license": "MIT",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/MIT"
+    }
+  ],
   "main": "./lib",
   "dependencies": {
     "passport-strategy": "1.x.x"
