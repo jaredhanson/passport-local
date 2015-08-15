@@ -18,7 +18,9 @@ unobtrusively integrated into any application or framework that supports
 
 ## Install
 
-    $ npm install passport-local
+```no-highlight
+$ npm install passport-local
+```
 
 ## Usage
 
@@ -28,16 +30,29 @@ The local authentication strategy authenticates users using a username and
 password.  The strategy requires a `verify` callback, which accepts these
 credentials and calls `done` providing a user.
 
-    passport.use(new LocalStrategy(
-      function(username, password, done) {
-        User.findOne({ username: username }, function (err, user) {
-          if (err) { return done(err); }
-          if (!user) { return done(null, false); }
-          if (!user.verifyPassword(password)) { return done(null, false); }
-          return done(null, user);
-        });
-      }
-    ));
+```js
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ username: username }, function (err, user) {
+      if (err) { return done(err); }
+      if (!user) { return done(null, false); }
+      if (!user.verifyPassword(password)) { return done(null, false); }
+      return done(null, user);
+    });
+  }
+));
+```
+
+##### Available Options
+
+This strategy takes an optional options hash before the function, e.g. `new LocalStrategy({/* options */, callback})`.
+
+The available options are:
+
+* `usernameField` - Optional, defaults to 'username'
+* `passwordField` - Optional, defaults to 'password'
+
+Both fields define the name of the properties in the POST body that are sent to the server.
 
 #### Parameters
 
@@ -82,11 +97,13 @@ authenticate requests.
 For example, as route middleware in an [Express](http://expressjs.com/)
 application:
 
-    app.post('/login', 
-      passport.authenticate('local', { failureRedirect: '/login' }),
-      function(req, res) {
-        res.redirect('/');
-      });
+```js
+app.post('/login', 
+  passport.authenticate('local', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
+```
 
 ## Examples
 
@@ -94,12 +111,14 @@ For complete, working examples, refer to the multiple [examples](https://github.
 
 ## Tests
 
-    $ npm install
-    $ npm test
+```no-highlight
+$ npm install
+$ npm test
+```
 
 ## Credits
 
-  - [Jared Hanson](http://github.com/jaredhanson)
+- [Jared Hanson](http://github.com/jaredhanson)
 
 ## License
 
