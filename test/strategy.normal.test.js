@@ -83,40 +83,37 @@ describe('Strategy', function() {
   
   describe('handling a request without a body', function() {
     var strategy = new Strategy(function(username, password, done) {
-      throw new Error('should not be called');
+      return done(null, false, { message: 'authentication failed' });
     });
     
-    var info, status;
+    var info;
     
     before(function(done) {
       chai.passport(strategy)
-        .fail(function(i, s) {
+        .fail(function(i) {
           info = i;
-          status = s;
           done();
         })
         .authenticate();
     });
     
-    it('should fail with info and status', function() {
-      expect(info).to.be.an.object;
-      expect(info.message).to.equal('Missing credentials');
-      expect(status).to.equal(400);
+    it('should fail', function() {
+      expect(info).to.be.an('object');
+      expect(info.message).to.equal('authentication failed');
     });
   });
   
-  describe('handling a request without a body, but no username and password', function() {
+  describe('handling a request with a body, but no username and password', function() {
     var strategy = new Strategy(function(username, password, done) {
-      throw new Error('should not be called');
+      return done(null, false, { message: 'authentication failed' });
     });
     
-    var info, status;
+    var info;
     
     before(function(done) {
       chai.passport(strategy)
         .fail(function(i, s) {
           info = i;
-          status = s;
           done();
         })
         .req(function(req) {
@@ -125,25 +122,23 @@ describe('Strategy', function() {
         .authenticate();
     });
     
-    it('should fail with info and status', function() {
-      expect(info).to.be.an.object;
-      expect(info.message).to.equal('Missing credentials');
-      expect(status).to.equal(400);
+    it('should fail', function() {
+      expect(info).to.be.an('object');
+      expect(info.message).to.equal('authentication failed');
     });
   });
   
   describe('handling a request without a body, but no password', function() {
     var strategy = new Strategy(function(username, password, done) {
-      throw new Error('should not be called');
+      return done(null, false, { message: 'authentication failed' });
     });
     
-    var info, status;
+    var info;
     
     before(function(done) {
       chai.passport(strategy)
         .fail(function(i, s) {
           info = i;
-          status = s;
           done();
         })
         .req(function(req) {
@@ -153,25 +148,23 @@ describe('Strategy', function() {
         .authenticate();
     });
     
-    it('should fail with info and status', function() {
-      expect(info).to.be.an.object;
-      expect(info.message).to.equal('Missing credentials');
-      expect(status).to.equal(400);
+    it('should fail', function() {
+      expect(info).to.be.an('object');
+      expect(info.message).to.equal('authentication failed');
     });
   });
   
   describe('handling a request without a body, but no username', function() {
     var strategy = new Strategy(function(username, password, done) {
-      throw new Error('should not be called');
+      return done(null, false, { message: 'authentication failed' });
     });
     
-    var info, status;
+    var info;
     
     before(function(done) {
       chai.passport(strategy)
         .fail(function(i, s) {
           info = i;
-          status = s;
           done();
         })
         .req(function(req) {
@@ -181,10 +174,9 @@ describe('Strategy', function() {
         .authenticate();
     });
     
-    it('should fail with info and status', function() {
-      expect(info).to.be.an.object;
-      expect(info.message).to.equal('Missing credentials');
-      expect(status).to.equal(400);
+    it('should fail', function() {
+      expect(info).to.be.an('object');
+      expect(info.message).to.equal('authentication failed');
     });
   });
   
