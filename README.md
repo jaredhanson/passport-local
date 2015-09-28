@@ -1,10 +1,10 @@
 # passport-local
 
-[![Build](https://travis-ci.org/jaredhanson/passport-local.png)](https://travis-ci.org/jaredhanson/passport-local)
-[![Coverage](https://coveralls.io/repos/jaredhanson/passport-local/badge.png)](https://coveralls.io/r/jaredhanson/passport-local)
-[![Quality](https://codeclimate.com/github/jaredhanson/passport-local.png)](https://codeclimate.com/github/jaredhanson/passport-local)
-[![Dependencies](https://david-dm.org/jaredhanson/passport-local.png)](https://david-dm.org/jaredhanson/passport-local)
-[![Tips](http://img.shields.io/gittip/jaredhanson.png)](https://www.gittip.com/jaredhanson/)
+[![Build](https://travis-ci.org/jaredhanson/passport-local.svg)](https://travis-ci.org/jaredhanson/passport-local)
+[![Coverage](https://coveralls.io/repos/jaredhanson/passport-local/badge.svg)](https://coveralls.io/r/jaredhanson/passport-local)
+[![Quality](https://codeclimate.com/github/jaredhanson/passport-local.svg)](https://codeclimate.com/github/jaredhanson/passport-local)
+[![Dependencies](https://david-dm.org/jaredhanson/passport-local.svg)](https://david-dm.org/jaredhanson/passport-local)
+[![Tips](http://img.shields.io/gittip/jaredhanson.svg)](https://www.gittip.com/jaredhanson/)
 
 
 [Passport](http://passportjs.org/) strategy for authenticating with a username
