@@ -62,16 +62,12 @@ differently, options are available to change the defaults.
 
     passport.use(new LocalStrategy({
         usernameField: 'email',
-        passwordField: 'passwd',
-        session: false
+        passwordField: 'passwd'
       },
       function(username, password, done) {
         // ...
       }
     ));
-
-When session support is not necessary, it can be safely disabled by
-setting the `session` option to false.
 
 The verify callback can be supplied with the `request` object by setting
 the `passReqToCallback` option to true, and changing callback arguments
@@ -80,8 +76,7 @@ accordingly.
     passport.use(new LocalStrategy({
         usernameField: 'email',
         passwordField: 'passwd',
-        passReqToCallback: true,
-        session: false
+        passReqToCallback: true
       },
       function(req, username, password, done) {
         // request object is now first argument
