@@ -33,5 +33,33 @@ describe('Strategy', function() {
       expect(status).to.equal(400);
     });
   });
+
+  describe('handling a request without a body, but no username and password, with custom error option to authenticate', function() {
+    var strategy = new Strategy(function(username, password, done) {
+      throw new Error('should not be called');
+    });
+
+    var info, status;
+	var sentinel = new Error('my custom error');
+
+    before(function(done) {
+      chai.passport(strategy)
+        .fail(function(i, s) {
+          info = i;
+          status = s;
+          done();
+        })
+        .req(function(req) {
+          req.body = {};
+        })
+        .authenticate({ badRequestMessage: sentinel });
+    });
+
+    it('should fail with info and status', function() {
+      expect(info).to.be.an.object;
+      expect(info).to.equal(sentinel);
+      expect(status).to.equal(400);
+    });
+  });
   
 });
