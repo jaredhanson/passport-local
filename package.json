@@ -23,6 +23,7 @@
   "bugs": {
     "url": "http://github.com/jaredhanson/passport-local/issues"
   },
+  "license": "MIT",
   "licenses": [
     {
       "type": "MIT",
