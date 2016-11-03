@@ -50,6 +50,11 @@ This strategy takes an optional options hash before the function, e.g. `new Loca
 The available options are:
 
 * `usernameField` - Optional, defaults to 'username'
+
+    or
+
+* `usernameFields` - Optional, defaults to ['username']
+
 * `passwordField` - Optional, defaults to 'password'
 
 Both fields define the name of the properties in the POST body that are sent to the server.
@@ -62,6 +67,8 @@ differently, options are available to change the defaults.
 
     passport.use(new LocalStrategy({
         usernameField: 'email',
+        // To allow multiple fields to be checked
+        // usernameFields: ['username', 'email', 'user[email]'],
         passwordField: 'passwd',
         session: false
       },
@@ -98,7 +105,7 @@ For example, as route middleware in an [Express](http://expressjs.com/)
 application:
 
 ```js
-app.post('/login', 
+app.post('/login',
   passport.authenticate('local', { failureRedirect: '/login' }),
   function(req, res) {
     res.redirect('/');
