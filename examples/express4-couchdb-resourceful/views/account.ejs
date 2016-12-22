@@ -1,0 +1,15 @@
+<% layout('layout') -%>
+
+<% if (typeof user == 'object' && user) { %>
+  <div>
+    <label>Username:</label>
+    <label> <%= user.username %> </label><br/>
+  </div>
+  <div>
+    <label>Password:</label>
+    <label> <%= user.password%> </label> <br/>
+  </div>
+<% } else { %>
+  <p> Please log in.
+<% } %>
+

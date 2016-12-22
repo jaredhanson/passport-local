@@ -1,0 +1,23 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.0.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "~1.0.1",
+    "debug": "~0.7.4",
+    "ejs": "~0.8.5",
+    "ejs-locals": "^1.0.2",
+    "express": "~4.0.0",
+    "express-session": "^1.6.1",
+    "morgan": "~1.0.0",
+    "passport": "^0.2.0",
+    "passport-local": "^1.0.0",
+    "resourceful": "^0.2.3",
+    "static-favicon": "~1.0.0"
+  }
+}
