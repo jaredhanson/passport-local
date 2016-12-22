@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+<head>
+  <title>login</title>
+</head>
+<body>
+<h1>login</h1>
+<% if (message) { %>
+
+  <div><%= message %></div>
+<% } %>
+<form action='/login' method='post'>
+  <div class='form-group'>
+    <label>email</label>
+    <input type='text' name='email'>
+  </div>
+  <div class='form-group'>
+    <label>password</label>
+    <input type='password' name='password'>
+  </div>
+  <button type='submit'>login</button>
+</form>
+<a href='/signup'>signup</a>
+<a href='/'>home</a>
+</body>
