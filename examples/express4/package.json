@@ -1,0 +1,16 @@
+{
+  "name": "passport-local-examples-login",
+  "version": "0.0.0",
+  "dependencies": {
+    "express": "4.x.x",
+    "cookie-parser": ">=0.0.0",
+    "express-session":">=0.0.0",
+    "morgan":">=0.0.0",
+    "method-override":">0.0.0",
+    "body-parser":">=0.0.0",
+    "connect-flash": "0.1.x",
+    "jade": "1.6.x",
+    "passport": ">= 0.0.0",
+    "passport-local": ">= 0.0.0"
+  }
+}

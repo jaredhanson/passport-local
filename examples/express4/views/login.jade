@@ -1,0 +1,15 @@
+extends ./layout.jade
+
+block content
+    if message
+        p #{message}
+    form(action="/login", method="post")
+        div
+            label(for="username") Username:
+            input(id="username", type="text", name="username")
+        div
+            label(for="password") Password:
+            input(id="password", type="text", name="password")
+        div
+            input(type="submit", value="submit")
+    p <small>Hint - bob:secret</small>
