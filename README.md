@@ -31,6 +31,9 @@ password.  The strategy requires a `verify` callback, which accepts these
 credentials and calls `done` providing a user.
 
 ```js
+passport = require('passport');
+LocalStrategy = require('passport-local').Strategy;
+
 passport.use(new LocalStrategy(
   function(username, password, done) {
     User.findOne({ username: username }, function (err, user) {
@@ -92,12 +95,17 @@ accordingly.
 #### Authenticate Requests
 
 Use `passport.authenticate()`, specifying the `'local'` strategy, to
-authenticate requests.
+authenticate requests. It searches for fields in the query string and
+`req.body`, so ensure body parsers are in place if these fields are
+sent in the body.
 
 For example, as route middleware in an [Express](http://expressjs.com/)
 application:
 
 ```js
+app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(passport.initialize());
+
 app.post('/login', 
   passport.authenticate('local', { failureRedirect: '/login' }),
   function(req, res) {
