@@ -4,8 +4,9 @@
 var chai = require('chai')
   , Strategy = require('../lib/strategy');
 
+chai.use(require('chai-passport-strategy'));
 
-describe('Strategy', function() {
+describe('Strategy', function () {
     
   describe('failing authentication', function() {
     var strategy = new Strategy(function(username, password, done) {
@@ -15,7 +16,7 @@ describe('Strategy', function() {
     var info;
     
     before(function(done) {
-      chai.passport(strategy)
+      chai.passport.use(strategy)
         .fail(function(i) {
           info = i;
           done();
@@ -41,7 +42,7 @@ describe('Strategy', function() {
     var info;
     
     before(function(done) {
-      chai.passport(strategy)
+      chai.passport.use(strategy)
         .fail(function(i) {
           info = i;
           done();

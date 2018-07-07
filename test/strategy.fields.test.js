@@ -4,6 +4,7 @@
 var chai = require('chai')
   , Strategy = require('../lib/strategy');
 
+chai.use(require('chai-passport-strategy'));
 
 describe('Strategy', function() {
     
@@ -19,7 +20,7 @@ describe('Strategy', function() {
       , info;
     
     before(function(done) {
-      chai.passport(strategy)
+      chai.passport.use(strategy)
         .success(function(u, i) {
           user = u;
           info = i;
@@ -34,12 +35,12 @@ describe('Strategy', function() {
     });
     
     it('should supply user', function() {
-      expect(user).to.be.an.object;
+      expect(user).to.be.an('object');
       expect(user.id).to.equal('1234');
     });
     
     it('should supply info', function() {
-      expect(info).to.be.an.object;
+      expect(info).to.be.an('object');
       expect(info.scope).to.equal('read');
     });
   });
@@ -56,7 +57,7 @@ describe('Strategy', function() {
       , info;
     
     before(function(done) {
-      chai.passport(strategy)
+      chai.passport.use(strategy)
         .success(function(u, i) {
           user = u;
           info = i;
@@ -72,12 +73,12 @@ describe('Strategy', function() {
     });
     
     it('should supply user', function() {
-      expect(user).to.be.an.object;
+      expect(user).to.be.an('object');
       expect(user.id).to.equal('1234');
     });
     
     it('should supply info', function() {
-      expect(info).to.be.an.object;
+      expect(info).to.be.an('object');
       expect(info.scope).to.equal('read');
     });
   });
