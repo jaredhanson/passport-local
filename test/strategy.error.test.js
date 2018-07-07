@@ -3,6 +3,7 @@
 var chai = require('chai')
   , Strategy = require('../lib/strategy');
 
+chai.use(require('chai-passport-strategy'));
 
 describe('Strategy', function() {
     
@@ -14,7 +15,7 @@ describe('Strategy', function() {
     var err;
     
     before(function(done) {
-      chai.passport(strategy)
+      chai.passport.use(strategy)
         .error(function(e) {
           err = e;
           done();
@@ -41,7 +42,7 @@ describe('Strategy', function() {
     var err;
     
     before(function(done) {
-      chai.passport(strategy)
+      chai.passport.use(strategy)
         .error(function(e) {
           err = e;
           done();
