@@ -45,7 +45,7 @@ passport.use(new LocalStrategy(
 
 ##### Available Options
 
-This strategy takes an optional options hash before the function, e.g. `new LocalStrategy({/* options */, callback})`.
+This strategy takes an optional options hash before the function, e.g. `new LocalStrategy({/* options */ }, callback)`.
 
 The available options are:
 
