@@ -1,10 +1,10 @@
 # passport-local
 
-[![Build](https://travis-ci.org/jaredhanson/passport-local.png)](https://travis-ci.org/jaredhanson/passport-local)
-[![Coverage](https://coveralls.io/repos/jaredhanson/passport-local/badge.png)](https://coveralls.io/r/jaredhanson/passport-local)
-[![Quality](https://codeclimate.com/github/jaredhanson/passport-local.png)](https://codeclimate.com/github/jaredhanson/passport-local)
-[![Dependencies](https://david-dm.org/jaredhanson/passport-local.png)](https://david-dm.org/jaredhanson/passport-local)
-[![Tips](http://img.shields.io/gittip/jaredhanson.png)](https://www.gittip.com/jaredhanson/)
+[![Build Status](https://travis-ci.org/passport-next/passport-local.svg?branch=master)](https://travis-ci.org/passport-next/passport-local)
+[![Coverage Status](https://coveralls.io/repos/github/passport-next/passport-local/badge.svg?branch=master)](https://coveralls.io/github/passport-next/passport-local?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/b7ff64d57f9f816260a3/maintainability)](https://codeclimate.com/github/passport-next/passport-local/maintainability)
+[![Dependencies](https://david-dm.org/passport-next/passport-local.png)](https://david-dm.org/passport-next/passport-local)
+<!--[![SAST](https://gitlab.com/passport-next/passport-local/badges/master/build.svg)](https://gitlab.com/passport-next/passport-local/badges/master/build.svg)-->
 
 
 [Passport](http://passportjs.org/) strategy for authenticating with a username
@@ -19,7 +19,7 @@ unobtrusively integrated into any application or framework that supports
 ## Install
 
 ```bash
-$ npm install passport-local
+$ npm install @passport-next/passport-local
 ```
 
 ## Usage
@@ -119,15 +119,3 @@ Additional examples can be found on the [wiki](https://github.com/jaredhanson/pa
 $ npm install
 $ npm test
 ```
-
-## Credits
-
-- [Jared Hanson](http://github.com/jaredhanson)
-
-## License
-
-[The MIT License](http://opensource.org/licenses/MIT)
-
-Copyright (c) 2011-2015 Jared Hanson <[http://jaredhanson.net/](http://jaredhanson.net/)>
-
-<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/vK9dyjRnnWsMzzJTQ57fRJpH/jaredhanson/passport-local'>  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/vK9dyjRnnWsMzzJTQ57fRJpH/jaredhanson/passport-local.svg' /></a>
