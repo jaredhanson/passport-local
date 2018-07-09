@@ -4,6 +4,7 @@
 var chai = require('chai')
   , Strategy = require('../lib/strategy');
 
+chai.use(require('chai-passport-strategy'));
 
 describe('Strategy', function() {
     
@@ -19,7 +20,7 @@ describe('Strategy', function() {
       , info;
     
     before(function(done) {
-      chai.passport(strategy)
+      chai.passport.use(strategy)
         .success(function(u, i) {
           user = u;
           info = i;
@@ -34,12 +35,12 @@ describe('Strategy', function() {
     });
     
     it('should supply user', function() {
-      expect(user).to.be.an.object;
+      expect(user).to.be.an('object');
       expect(user.id).to.equal('1234');
     });
     
     it('should supply info', function() {
-      expect(info).to.be.an.object;
+      expect(info).to.be.an('object');
       expect(info.scope).to.equal('read');
     });
   });
@@ -56,7 +57,7 @@ describe('Strategy', function() {
       , info;
     
     before(function(done) {
-      chai.passport(strategy)
+      chai.passport.use(strategy)
         .success(function(u, i) {
           user = u;
           info = i;
@@ -71,12 +72,12 @@ describe('Strategy', function() {
     });
     
     it('should supply user', function() {
-      expect(user).to.be.an.object;
+      expect(user).to.be.an('object');
       expect(user.id).to.equal('1234');
     });
     
     it('should supply info', function() {
-      expect(info).to.be.an.object;
+      expect(info).to.be.an('object');
       expect(info.scope).to.equal('read');
     });
   });
@@ -89,7 +90,7 @@ describe('Strategy', function() {
     var info, status;
     
     before(function(done) {
-      chai.passport(strategy)
+      chai.passport.use(strategy)
         .fail(function(i, s) {
           info = i;
           status = s;
@@ -99,13 +100,13 @@ describe('Strategy', function() {
     });
     
     it('should fail with info and status', function() {
-      expect(info).to.be.an.object;
+      expect(info).to.be.an('object');
       expect(info.message).to.equal('Missing credentials');
       expect(status).to.equal(400);
     });
   });
   
-  describe('handling a request without a body, but no username and password', function() {
+  describe('handling a request with a body, but no username and password', function() {
     var strategy = new Strategy(function(username, password, done) {
       throw new Error('should not be called');
     });
@@ -113,7 +114,7 @@ describe('Strategy', function() {
     var info, status;
     
     before(function(done) {
-      chai.passport(strategy)
+      chai.passport.use(strategy)
         .fail(function(i, s) {
           info = i;
           status = s;
@@ -126,13 +127,13 @@ describe('Strategy', function() {
     });
     
     it('should fail with info and status', function() {
-      expect(info).to.be.an.object;
+      expect(info).to.be.an('object');
       expect(info.message).to.equal('Missing credentials');
       expect(status).to.equal(400);
     });
   });
   
-  describe('handling a request without a body, but no password', function() {
+  describe('handling a request with a body, but no password', function() {
     var strategy = new Strategy(function(username, password, done) {
       throw new Error('should not be called');
     });
@@ -140,7 +141,7 @@ describe('Strategy', function() {
     var info, status;
     
     before(function(done) {
-      chai.passport(strategy)
+      chai.passport.use(strategy)
         .fail(function(i, s) {
           info = i;
           status = s;
@@ -154,13 +155,13 @@ describe('Strategy', function() {
     });
     
     it('should fail with info and status', function() {
-      expect(info).to.be.an.object;
+      expect(info).to.be.an('object');
       expect(info.message).to.equal('Missing credentials');
       expect(status).to.equal(400);
     });
   });
   
-  describe('handling a request without a body, but no username', function() {
+  describe('handling a request with a body, but no username', function() {
     var strategy = new Strategy(function(username, password, done) {
       throw new Error('should not be called');
     });
@@ -168,7 +169,7 @@ describe('Strategy', function() {
     var info, status;
     
     before(function(done) {
-      chai.passport(strategy)
+      chai.passport.use(strategy)
         .fail(function(i, s) {
           info = i;
           status = s;
@@ -182,7 +183,7 @@ describe('Strategy', function() {
     });
     
     it('should fail with info and status', function() {
-      expect(info).to.be.an.object;
+      expect(info).to.be.an('object');
       expect(info.message).to.equal('Missing credentials');
       expect(status).to.equal(400);
     });

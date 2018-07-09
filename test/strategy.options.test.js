@@ -4,10 +4,11 @@
 var chai = require('chai')
   , Strategy = require('../lib/strategy');
 
+chai.use(require('chai-passport-strategy'));
 
 describe('Strategy', function() {
-    
-  describe('handling a request without a body, but no username and password, with message option to authenticate', function() {
+
+  describe('handling a request with a body, but no username and password, with message option to authenticate', function() {
     var strategy = new Strategy(function(username, password, done) {
       throw new Error('should not be called');
     });
@@ -15,7 +16,7 @@ describe('Strategy', function() {
     var info, status;
     
     before(function(done) {
-      chai.passport(strategy)
+      chai.passport.use(strategy)
         .fail(function(i, s) {
           info = i;
           status = s;
@@ -28,7 +29,7 @@ describe('Strategy', function() {
     });
     
     it('should fail with info and status', function() {
-      expect(info).to.be.an.object;
+      expect(info).to.be.an('object');
       expect(info.message).to.equal('Something is wrong with this request');
       expect(status).to.equal(400);
     });

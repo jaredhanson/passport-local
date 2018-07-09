@@ -1,10 +1,10 @@
 # passport-local
 
-[![Build](https://travis-ci.org/jaredhanson/passport-local.png)](https://travis-ci.org/jaredhanson/passport-local)
-[![Coverage](https://coveralls.io/repos/jaredhanson/passport-local/badge.png)](https://coveralls.io/r/jaredhanson/passport-local)
-[![Quality](https://codeclimate.com/github/jaredhanson/passport-local.png)](https://codeclimate.com/github/jaredhanson/passport-local)
-[![Dependencies](https://david-dm.org/jaredhanson/passport-local.png)](https://david-dm.org/jaredhanson/passport-local)
-[![Tips](http://img.shields.io/gittip/jaredhanson.png)](https://www.gittip.com/jaredhanson/)
+[![Build Status](https://travis-ci.org/passport-next/passport-local.svg?branch=master)](https://travis-ci.org/passport-next/passport-local)
+[![Coverage Status](https://coveralls.io/repos/github/passport-next/passport-local/badge.svg?branch=master)](https://coveralls.io/github/passport-next/passport-local?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/b7ff64d57f9f816260a3/maintainability)](https://codeclimate.com/github/passport-next/passport-local/maintainability)
+[![Dependencies](https://david-dm.org/passport-next/passport-local.png)](https://david-dm.org/passport-next/passport-local)
+<!--[![SAST](https://gitlab.com/passport-next/passport-local/badges/master/build.svg)](https://gitlab.com/passport-next/passport-local/badges/master/build.svg)-->
 
 
 [Passport](http://passportjs.org/) strategy for authenticating with a username
@@ -19,7 +19,7 @@ unobtrusively integrated into any application or framework that supports
 ## Install
 
 ```bash
-$ npm install passport-local
+$ npm install @passport-next/passport-local
 ```
 
 ## Usage
@@ -31,6 +31,9 @@ password.  The strategy requires a `verify` callback, which accepts these
 credentials and calls `done` providing a user.
 
 ```js
+passport = require('passport');
+LocalStrategy = require('passport-local').Strategy;
+
 passport.use(new LocalStrategy(
   function(username, password, done) {
     User.findOne({ username: username }, function (err, user) {
@@ -45,7 +48,7 @@ passport.use(new LocalStrategy(
 
 ##### Available Options
 
-This strategy takes an optional options hash before the function, e.g. `new LocalStrategy({/* options */, callback})`.
+This strategy takes an optional options hash before the function, e.g. `new LocalStrategy({/* options */ }, callback)`.
 
 The available options are:
 
@@ -60,44 +63,48 @@ By default, `LocalStrategy` expects to find credentials in parameters
 named username and password. If your site prefers to name these fields
 differently, options are available to change the defaults.
 
-    passport.use(new LocalStrategy({
-        usernameField: 'email',
-        passwordField: 'passwd',
-        session: false
-      },
-      function(username, password, done) {
-        // ...
-      }
-    ));
-
-When session support is not necessary, it can be safely disabled by
-setting the `session` option to false.
+```js
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'passwd',
+  },
+  function(username, password, done) {
+    // ...
+  }
+));
+```
 
 The verify callback can be supplied with the `request` object by setting
 the `passReqToCallback` option to true, and changing callback arguments
 accordingly.
 
-    passport.use(new LocalStrategy({
-        usernameField: 'email',
-        passwordField: 'passwd',
-        passReqToCallback: true,
-        session: false
-      },
-      function(req, username, password, done) {
-        // request object is now first argument
-        // ...
-      }
-    ));
+```js
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'passwd',
+    passReqToCallback: true,
+  },
+  function(req, username, password, done) {
+    // request object is now first argument
+    // ...
+  }
+));
+```
 
 #### Authenticate Requests
 
 Use `passport.authenticate()`, specifying the `'local'` strategy, to
-authenticate requests.
+authenticate requests. It searches for fields in the query string and
+`req.body`, so ensure body parsers are in place if these fields are
+sent in the body.
 
 For example, as route middleware in an [Express](http://expressjs.com/)
 application:
 
 ```js
+app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(passport.initialize());
+
 app.post('/login', 
   passport.authenticate('local', { failureRedirect: '/login' }),
   function(req, res) {
@@ -119,13 +126,3 @@ Additional examples can be found on the [wiki](https://github.com/jaredhanson/pa
 $ npm install
 $ npm test
 ```
-
-## Credits
-
-- [Jared Hanson](http://github.com/jaredhanson)
-
-## License
-
-[The MIT License](http://opensource.org/licenses/MIT)
-
-Copyright (c) 2011-2015 Jared Hanson <[http://jaredhanson.net/](http://jaredhanson.net/)>

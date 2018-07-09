@@ -1,6 +1,6 @@
 {
-  "name": "passport-local",
-  "version": "1.0.0",
+  "name": "@passport-next/passport-local",
+  "version": "1.1.0",
   "description": "Local username and password authentication strategy for Passport.",
   "keywords": [
     "passport",
@@ -12,16 +12,15 @@
     "password"
   ],
   "author": {
-    "name": "Jared Hanson",
-    "email": "jaredhanson@gmail.com",
-    "url": "http://www.jaredhanson.net/"
+    "name": "Rowan Wookey",
+    "email": "admin@rwky.net"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/jaredhanson/passport-local.git"
+    "url": "git://github.com/passport-next/passport-local.git"
   },
   "bugs": {
-    "url": "http://github.com/jaredhanson/passport-local/issues"
+    "url": "http://github.com/passport-next/passport-local/issues"
   },
   "license": "MIT",
   "licenses": [
@@ -32,15 +31,15 @@
   ],
   "main": "./lib",
   "dependencies": {
-    "passport-strategy": "1.x.x"
+    "@passport-next/passport-strategy": "1.1.x"
   },
   "devDependencies": {
-    "mocha": "1.x.x",
-    "chai": "1.x.x",
-    "chai-passport-strategy": "0.1.x"
+    "chai": "4.x.x",
+    "chai-passport-strategy": "1.x.x",
+    "mocha": "5.x.x"
   },
   "engines": {
-    "node": ">= 0.4.0"
+    "node": ">=6"
   },
   "scripts": {
     "test": "node_modules/.bin/mocha --reporter spec --require test/bootstrap/node test/*.test.js"
