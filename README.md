@@ -15,12 +15,10 @@ unobtrusively integrated into any application or framework that supports
 
 ---
 
-Status:
-[![Build](https://img.shields.io/travis/jaredhanson/passport-local.svg)](https://travis-ci.org/jaredhanson/passport-local)
-[![Quality](https://img.shields.io/codeclimate/github/jaredhanson/passport-local.svg?label=quality)](https://codeclimate.com/github/jaredhanson/passport-local)
-[![Coverage](https://img.shields.io/coveralls/jaredhanson/passport-local.svg)](https://coveralls.io/r/jaredhanson/passport-local)
-[![Dependencies](https://img.shields.io/david/jaredhanson/passport-local.svg)](https://david-dm.org/jaredhanson/passport-local)
-
+[![npm](https://img.shields.io/npm/v/passport-local.svg)](https://www.npmjs.com/package/passport-local)
+[![build](https://img.shields.io/travis/jaredhanson/passport-local.svg)](https://travis-ci.org/jaredhanson/passport-local)
+[![coverage](https://img.shields.io/coveralls/jaredhanson/passport-local.svg)](https://coveralls.io/github/jaredhanson/passport-local)
+[...](https://github.com/jaredhanson/passport-local/wiki/Status)
 
 ## Install
 
