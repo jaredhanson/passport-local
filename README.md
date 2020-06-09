@@ -11,7 +11,12 @@ unobtrusively integrated into any application or framework that supports
 
 ---
 
-<p align="center"><a href="http://www.tkqlhce.com/click-8907558-13433666" target="_top">1Password, the only password manager you should trust.</a> Industry-leading security and award winning design.</p>
+<p align="center">
+  <sup>Advertisement</sup>
+  <br>
+  <br>
+  <a href="https://www.tkqlhce.com/click-8907558-13433666?sid=cuHsLFjXqeyT2iHbYYaHMuw" target="_top">1Password, the only password manager you should trust.</a>Industry-leading security and award winning design.
+</p>
 
 ---
 
