@@ -120,13 +120,13 @@ Use `req.isAuthorized()` to verify if the user is already authenticated and shou
 
 ```js
 app.get('/profile',
-	function(req, res){
-		if (req.isAuthenticated()) {
-			//do something
-		} else {
-			res.redirect('/login');
-		}
-	});
+  function(req, res){
+    if (req.isAuthenticated()) {
+      //do something
+    } else {
+      res.redirect('/login');
+    }
+  });
 ``` 
 
 ## Examples
