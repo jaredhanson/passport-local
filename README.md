@@ -115,9 +115,10 @@ app.post('/login',
 
 ## Examples
 
-Developers using the popular [Express](http://expressjs.com/) web framework can
-refer to an [example](https://github.com/passport/express-4.x-local-example)
-as a starting point for their own web applications.
+* [express-4.x-local-example](https://github.com/passport/express-4.x-local-example)
+
+  Illustrates how to use the password strategy within an [Express](https://expressjs.com)
+  application.
 
 Additional examples can be found on the [wiki](https://github.com/jaredhanson/passport-local/wiki/Examples).
 
