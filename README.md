@@ -12,9 +12,7 @@ unobtrusively integrated into any application or framework that supports
 <div align="center">
 
 :seedling: [Tutorial](https://www.passportjs.org/tutorials/password/) •
-:dart: [How-to](https://www.passportjs.org/howtos/password/) •
-:hammer_and_wrench: [API Reference](https://www.passportjs.org/howtos/password/) •
-:brain: [Understanding OAuth 2.0](https://www.passportjs.org/concepts/oauth2/)
+:dart: [How-to](https://www.passportjs.org/howtos/password/)
 
 </div>
 
