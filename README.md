@@ -12,7 +12,7 @@ unobtrusively integrated into any application or framework that supports
 <div align="center">
 
 :seedling: [Tutorial](https://www.passportjs.org/tutorials/password/?utm_source=github&utm_medium=referral&utm_campaign=passport-local&utm_content=nav-tutorial) •
-:dart: [How-to](https://www.passportjs.org/howtos/password/?utm_source=github&utm_medium=referral&utm_campaign=passport-local&utm_content=nav-howto)
+:dart: [How-to](https://www.passportjs.org/howtos/password/?utm_source=github&utm_medium=referral&utm_campaign=passport-local&utm_content=nav-howto) •
 :heart: [Sponsors](https://www.passportjs.org/sponsors/?utm_source=github&utm_medium=referral&utm_campaign=passport-local&utm_content=nav-sponsors)
 
 </div>
