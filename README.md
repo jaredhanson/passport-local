@@ -1,13 +1,13 @@
 # passport-local
 
-[Passport](http://passportjs.org/) strategy for authenticating with a username
-and password.
+[Passport](https://www.passportjs.org/) strategy for authenticating with a
+username and password.
 
 This module lets you authenticate using a username and password in your Node.js
 applications.  By plugging into Passport, password-based sign in can be easily
 and unobtrusively integrated into any application or framework that supports
-[Connect](http://www.senchalabs.org/connect/)-style middleware, including
-[Express](http://expressjs.com/).
+[Connect](https://github.com/senchalabs/connect#readme)-style middleware, including
+[Express](https://expressjs.com/).
 
 <div align="center">
 
