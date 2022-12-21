@@ -105,7 +105,7 @@ describe('Strategy', function() {
     });
   });
   
-  describe('handling a request without a body, but no username and password', function() {
+  describe('handling a request with a body, but no username and password', function() {
     var strategy = new Strategy(function(username, password, done) {
       throw new Error('should not be called');
     });
@@ -132,7 +132,7 @@ describe('Strategy', function() {
     });
   });
   
-  describe('handling a request without a body, but no password', function() {
+  describe('handling a request with a body, but no password', function() {
     var strategy = new Strategy(function(username, password, done) {
       throw new Error('should not be called');
     });
@@ -160,7 +160,7 @@ describe('Strategy', function() {
     });
   });
   
-  describe('handling a request without a body, but no username', function() {
+  describe('handling a request with a body, but no username', function() {
     var strategy = new Strategy(function(username, password, done) {
       throw new Error('should not be called');
     });
