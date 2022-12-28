@@ -111,6 +111,8 @@ accordingly.
 Use `passport.authenticate()`, specifying the `'local'` strategy, to
 authenticate requests.
 
+When this function is present in a route, passport will verify for `usernameField`and `passwordField` in the request. A bad request error will be thrown when these attributes are not provided. It is used only for login purposes, to verify if the user has permission to access the route, please see `Authorizing Requests` instead.
+
 For example, as route middleware in an [Express](http://expressjs.com/)
 application:
 
@@ -121,6 +123,20 @@ app.post('/login',
     res.redirect('/');
   });
 ```
+#### Authorizing Requests
+
+Use `req.isAuthorized()` to verify if the user is already authenticated and should have or not access to the route.
+
+```js
+app.get('/profile',
+  function(req, res){
+    if (req.isAuthenticated()) {
+      //do something
+    } else {
+      res.redirect('/login');
+    }
+  });
+``` 
 
 ## Examples
 
