@@ -122,6 +122,10 @@ app.post('/login',
   });
 ```
 
+#### Brute-Force protection
+
+Local Strategy should be protected against Brute-Force attacks. One simple and good technique is [limiting failed consecutive attempts](https://github.com/animir/node-rate-limiter-flexible/wiki/Overall-example#minimal-protection-against-password-brute-force). More secure technique is [limiting failed consecutive attempts and many from single IP](https://github.com/animir/node-rate-limiter-flexible/wiki/Overall-example#login-endpoint-protection)
+
 ## Examples
 
 * [express-4.x-local-example](https://github.com/passport/express-4.x-local-example)
