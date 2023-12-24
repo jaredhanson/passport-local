@@ -48,6 +48,8 @@ password.  The strategy requires a `verify` callback, which accepts these
 credentials and calls `done` providing a user.
 
 ```js
+const LocalStrategy = require('passport-local')
+// ...
 passport.use(new LocalStrategy(
   function(username, password, done) {
     User.findOne({ username: username }, function (err, user) {
@@ -115,7 +117,7 @@ For example, as route middleware in an [Express](http://expressjs.com/)
 application:
 
 ```js
-app.post('/login', 
+app.post('/login',
   passport.authenticate('local', { failureRedirect: '/login' }),
   function(req, res) {
     res.redirect('/');
